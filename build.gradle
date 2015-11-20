@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+	    maven { url 'http://maven.oschina.net/content/groups/public/'}
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+    }
+}
+
+
+
+repositories {
+    mavenCentral()
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+
+sourceCompatibility = 1.8
+
+jar {
+    baseName = 'example-hadoop'
+    version = '0.1.0'
+}
+
+
+
+dependencies {
+    compile("com.googlecode.json-simple:json-simple:1.1.1")
+    // lucene
+//    compile('org.elasticsearch:elasticsearch:1.7.0')
+    compile("org.apache.lucene:lucene-core:4.10.4")
+    compile("org.apache.lucene:lucene-analyzers-common:4.10.4")
+    compile("org.apache.lucene:lucene-codecs:4.10.4")
+    compile("org.apache.lucene:lucene-queries:4.10.4")
+//    compile("org.apache.lucene:lucene-memory:4.10.4")
+//    compile("org.apache.lucene:lucene-highlighter:4.10.4")
+    compile("org.apache.lucene:lucene-queryparser:4.10.4")
+//    compile("org.apache.lucene:lucene-suggest:4.10.4")
+//    compile("org.apache.lucene:lucene-join:4.10.4")
+//    compile("org.apache.lucene:lucene-spatial:4.10.4")
+    // hadoop lib for driver
+    compile("org.apache.hadoop:hadoop-client:2.2.0")
+    // hadoop common for map/reduce task
+    compile("org.apache.hadoop:hadoop-common:2.2.0")
+    // testing
+    testCompile("junit:junit:4.11")
+}
