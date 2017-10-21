@@ -1,64 +1,12 @@
 # hadoop-searcher
 基于Lucene和HDFS的PB级数据索引、搜索、存储系统
 
-[![Stories in Ready](https://badge.waffle.io/Yelp/elastalert.png?label=ready&title=Ready)](https://waffle.io/Yelp/elastalert)
-[![Stories in In Progress](https://badge.waffle.io/Yelp/elastalert.png?label=in%20progress&title=In%20Progress)](https://waffle.io/Yelp/elastalert)
-[![Build Status](https://travis-ci.org/Yelp/elastalert.svg)](https://travis-ci.org/Yelp/elastalert)
-[![Join the chat at https://gitter.im/Yelp/elastalert](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Yelp/elastalert?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-## ElastAlert - [Read the Docs](http://elastalert.readthedocs.org).
-### Easy & Flexible Alerting With ElasticSearch
-
-ElastAlert is a simple framework for alerting on anomalies, spikes, or other patterns of interest from data in Elasticsearch.
-
-At Yelp, we use Elasticsearch, Logstash and Kibana for managing our ever increasing amount of data and logs.
-Kibana is great for visualizing and querying data, but we quickly realized that it needed a companion tool for alerting
-on inconsistencies in our data. Out of this need, ElastAlert was created.
-
-If you have data being written into Elasticsearch in near real time and want to be alerted when that data matches certain patterns, ElastAlert is the tool for you. If you can see it in Kibana, ElastAlert can alert on it.
-
-## Overview
-
-We designed ElastAlert to be reliable, highly modular, and easy to set up and configure.
-
-It works by combining Elasticsearch with two types of components, rule types and alerts.
-Elasticsearch is periodically queried and the data is passed to the rule type, which determines when
-a match is found. When a match occurs, it is given to one or more alerts, which take action based on the match.
-
-This is configured by a set of rules, each of which defines a query, a rule type, and a set of alerts.
-
-Several rule types with common monitoring paradigms are included with ElastAlert:
-
-- "Match where there are X events in Y time" (``frequency`` type)
-- "Match when the rate of events increases or decreases" (``spike`` type)
-- "Match when there are less than X events in Y time" (``flatline`` type)
-- "Match when a certain field matches a blacklist/whitelist" (``blacklist`` and ``whitelist`` type)
-- "Match on any event matching a given filter" (``any`` type)
-- "Match when a field has two different values within some time" (``change`` type)
-- "Match when a never before seen term appears in a field" (``new_term`` type)
-- "Match when the number of unique values for a field is above or below a threshold (``cardinality`` type)
-
-Currently, we have support built in for the following alert types:
-
-- Email
-- JIRA
-- OpsGenie
-- Commands
-- HipChat
-- Slack
-- AWS SNS
-
-Additional rule types and alerts can be easily imported or written.
-
-In addition to this basic usage, there are many other features that make alerts more useful:
-
-- Alerts link to Kibana dashboards
-- Aggregate counts for arbitrary fields
-- Combine alerts into periodic reports
-- Separate alerts by using a unique key field
-- Intercept and enhance match data
-
-To get started, check out `Running ElastAlert For The First Time` in the [documentation](http://elastalert.readthedocs.org).
+ •应用数据量大而ES集群管理成本过高且用户需求又不多的场景；
+ •优点节约成本并且Hadoop相对稳定，缺点量大速度相对不快（后面尝试用spark做）。
+•职责：数据存储在ES中，关掉所有2个月前的索引；
+   把包含历史数据的index存储在HDFS中；
+   抛弃ES直接调用Lucene接口查询字段；
+   对查询过程做MapReduce，返回查询结果。
 
 ## Running ElastAlert
 
